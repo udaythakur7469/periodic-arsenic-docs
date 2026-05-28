@@ -107,7 +107,7 @@ export function TableOfContents() {
                   href={`#${h.id}`}
                   className="block py-1 text-[0.8125rem] leading-snug transition-all"
                   style={{
-                    paddingLeft: h.level === 3 ? "0.75rem" : "0",
+                    paddingLeft: h.level === 3 ? "0.875rem" : "0.5rem",
                     color:
                       active === h.id
                         ? "var(--primary)"
@@ -117,14 +117,6 @@ export function TableOfContents() {
                       active === h.id
                         ? "2px solid var(--primary)"
                         : "2px solid transparent",
-                    paddingLeft:
-                      h.level === 3
-                        ? active === h.id
-                          ? "0.875rem"
-                          : "0.875rem"
-                        : active === h.id
-                          ? "0.5rem"
-                          : "0.5rem",
                   }}
                   onClick={(e) => {
                     e.preventDefault();
