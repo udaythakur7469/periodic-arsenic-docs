@@ -105,7 +105,7 @@ export default function HomePage() {
               {/* Sub */}
               <p className="text-xl mb-10 max-w-2xl leading-relaxed animate-slide-up stagger-3" style={{ color: 'var(--muted-foreground)' }}>
                 <code className="font-mono text-[0.95em] px-1.5 py-0.5 rounded" style={{ fontFamily: 'var(--font-mono)', background: 'oklch(0.488 0.243 264.376 / 0.1)', color: 'var(--primary)', border: '1px solid oklch(0.488 0.243 264.376 / 0.2)' }}>
-                  @periodic/arsenic
+                  @periodic/
                 </code>{' '}
                 is production-grade semantic runtime monitoring for Node.js. It doesn&apos;t just tell you something is slow — it tells you <em>exactly why</em>, with callsite attribution, request correlation, and 30+ classified signals.
               </p>
