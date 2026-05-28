@@ -97,7 +97,7 @@ export default function HomePage() {
                 className="font-extrabold tracking-tight leading-[1.08] mb-7 animate-slide-up stagger-2"
                 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(2.5rem, 6vw, 4.5rem)', color: 'var(--foreground)' }}
               >
-                what&apos;s{' '}
+                Reveel what&apos;s{' '}
                 <span className="text-blue-gradient">breaking</span>
                 <br />
               </h1>
