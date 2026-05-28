@@ -132,7 +132,6 @@ arsenic-docs/
 │
 ├── ARCHITECTURE.md                 # System design + component decisions
 ├── CONTRIBUTING.md                 # Contribution guide
-├── DEPLOYMENT.md                   # Vercel deployment + environment setup
 ├── CHANGELOG.md                    # Release history
 └── LICENSE
 ```
@@ -375,18 +374,6 @@ Signal severity is consistently represented across `SignalCard`, `Search`, and `
 | `npm run build` | Production build |
 | `npm run start` | Serve the production build |
 | `node generate-signals.mjs` | Scaffold new signal pages (skips existing files) |
-
----
-
-## Deployment
-
-The site is deployed to [Vercel](https://vercel.com). See [`DEPLOYMENT.md`](DEPLOYMENT.md) for the full setup guide including:
-
-- Vercel project configuration
-- Custom domain (`periodic.dev`) DNS setup
-- Environment variables (none required currently)
-- Preview deployments for PRs
-- Build cache settings
 
 ---
 
