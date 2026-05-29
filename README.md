@@ -5,7 +5,7 @@
 # arsenic-docs
 
 **Documentation website for [`@periodic/arsenic`](https://www.npmjs.com/package/@periodic/arsenic)**  
-Built with Next.js 14 · Deployed at [periodic.dev](https://periodic.dev)
+Built with Next.js 14 · Deployed at [arsenicdev.online](https://arsenicdev.online)
 
 [![Next.js](https://img.shields.io/badge/Next.js-14.2-black?logo=next.js&logoColor=white)](https://nextjs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
@@ -14,7 +14,7 @@ Built with Next.js 14 · Deployed at [periodic.dev](https://periodic.dev)
 
 ---
 
-[**Live Site →**](https://periodic.dev) · [**npm Package →**](https://www.npmjs.com/package/@periodic/arsenic) · [**Report a Doc Bug →**](https://github.com/thaku7469/arsenic-docs/issues/new?template=doc_bug.md) · [**Request a Page →**](https://github.com/thaku7469/arsenic-docs/issues/new?template=content_request.md)
+[**Live Site →**](https://arsenicdev.online) · [**npm Package →**](https://www.npmjs.com/package/@periodic/arsenic) · [**Report a Doc Bug →**](https://github.com/thaku7469/arsenic-docs/issues/new?template=doc_bug.md) · [**Request a Page →**](https://github.com/thaku7469/arsenic-docs/issues/new?template=content_request.md)
 
 </div>
 
