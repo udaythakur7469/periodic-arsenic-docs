@@ -1,41 +1,57 @@
-import type { Metadata } from 'next'
-import Link from 'next/link'
-import { CodeBlock } from '@/components/CodeBlock'
-import { SignalCard } from '@/components/SignalCard'
-import { ArrowLeft } from 'lucide-react'
+import type { Metadata } from "next";
+import { CodeBlock } from "@/components/CodeBlock";
+import { SignalCard } from "@/components/SignalCard";
+import { Callout } from "@/components/Callout";
 
-export const metadata: Metadata = { title: 'deprecated_api signal' }
+export const metadata: Metadata = { title: "deprecated_api signal" };
 
 export default function Page() {
   return (
     <article className="prose-doc">
-      <div className="mb-6">
-        <Link href="/docs/signals" className="inline-flex items-center gap-1.5 text-sm hover:opacity-80 transition-opacity" style={{ color: 'var(--primary)' }}>
-          <ArrowLeft className="h-3.5 w-3.5" /> Back to Signals
-        </Link>
-      </div>
-
       <SignalCard
         name="deprecated_api"
         severity="warning"
         summary="Query used deprecated database methods"
         detail="Deprecated database API detected. May cause compatibility issues in future database versions and often indicates missed migration opportunities."
-        causes={["Using deprecated ORM methods","Legacy query patterns not updated","Old driver API versions"]}
-        fixes={["Update to current API per migration guide","Check changelog for replacement methods","Test thoroughly after migration"]}
+        causes={[
+          "Using deprecated ORM methods",
+          "Legacy query patterns not updated",
+          "Old driver API versions",
+        ]}
+        fixes={[
+          "Update to current API per migration guide",
+          "Check changelog for replacement methods",
+          "Test thoroughly after migration",
+        ]}
       />
 
       <h2>Example</h2>
-      <CodeBlock language="typescript" code={`// BAD — deprecated MongoDB method
+      <CodeBlock
+        language="typescript"
+        code={`// BAD — deprecated MongoDB method
 await collection.count({ active: true }); // deprecated
 
 // GOOD — current equivalent
-await collection.countDocuments({ active: true });`} />
+await collection.countDocuments({ active: true });`}
+      />
+      <Callout type="warning" title="Check your driver version">
+        Deprecated APIs often still work for years but break on major version
+        bumps. Fix them before upgrading your database driver, not after.
+      </Callout>
 
-      <div className="mt-8 pt-6 border-t" style={{ borderColor: 'var(--border)' }}>
-        <Link href="/docs/signals" className="inline-flex items-center gap-1.5 text-sm hover:opacity-80 transition-opacity" style={{ color: 'var(--muted-foreground)' }}>
-          <ArrowLeft className="h-3.5 w-3.5" /> Back to all signals
-        </Link>
-      </div>
+      <h2>Common Mongoose deprecations</h2>
+      <CodeBlock
+        language="typescript"
+        code={`// BAD — deprecated methods
+await Model.count({ active: true });          // use countDocuments()
+await Model.findById(id).exec();             // .exec() optional since Mongoose 7
+mongoose.connect(uri, { useNewUrlParser: true }); // options removed in Mongoose 7
+
+// GOOD
+await Model.countDocuments({ active: true });
+await Model.findById(id);
+mongoose.connect(uri);`}
+      />
     </article>
-  )
+  );
 }

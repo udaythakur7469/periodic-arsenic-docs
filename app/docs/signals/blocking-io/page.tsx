@@ -1,42 +1,54 @@
-import type { Metadata } from 'next'
-import Link from 'next/link'
-import { CodeBlock } from '@/components/CodeBlock'
-import { SignalCard } from '@/components/SignalCard'
-import { ArrowLeft } from 'lucide-react'
+import type { Metadata } from "next";
+import { CodeBlock } from "@/components/CodeBlock";
+import { SignalCard } from "@/components/SignalCard";
+import { Callout } from "@/components/Callout";
 
-export const metadata: Metadata = { title: 'blocking_io signal' }
+export const metadata: Metadata = { title: "blocking_io signal" };
 
 export default function Page() {
   return (
     <article className="prose-doc">
-      <div className="mb-6">
-        <Link href="/docs/signals" className="inline-flex items-center gap-1.5 text-sm hover:opacity-80 transition-opacity" style={{ color: 'var(--primary)' }}>
-          <ArrowLeft className="h-3.5 w-3.5" /> Back to Signals
-        </Link>
-      </div>
-
       <SignalCard
         name="blocking_io"
         severity="critical"
         summary="Blocking operations detected on event loop"
         detail="Synchronous I/O operations are blocking the Node.js event loop, degrading overall application responsiveness. While blocked, no other requests can be processed."
-        causes={["Synchronous file operations (fs.readFileSync, fs.writeFileSync)","CPU-intensive operations on the main thread","Synchronous JSON.parse on large payloads","Missing async/await on I/O operations"]}
-        fixes={["Use async/await for all I/O operations","Use fs.promises instead of synchronous fs methods","Use worker threads for CPU-intensive tasks","Profile event loop lag with clinic.js"]}
+        causes={[
+          "Synchronous file operations (fs.readFileSync, fs.writeFileSync)",
+          "CPU-intensive operations on the main thread",
+          "Synchronous JSON.parse on large payloads",
+          "Missing async/await on I/O operations",
+        ]}
+        fixes={[
+          "Use async/await for all I/O operations",
+          "Use fs.promises instead of synchronous fs methods",
+          "Use worker threads for CPU-intensive tasks",
+          "Profile event loop lag with clinic.js",
+        ]}
       />
 
-      <h2>Example</h2>
-      <CodeBlock language="typescript" code={`// BAD — blocking read on main thread
-const config = fs.readFileSync('./config.json', 'utf8');
+      <Callout type="danger" title="Blocks the entire process">
+        Node.js runs on a single thread. Any synchronous CPU or I/O work blocks
+        every concurrent request for its entire duration.
+      </Callout>
 
-// GOOD — async file read
-const config = await fs.promises.readFile('./config.json', 'utf8');
+      <h2>CPU-intensive work</h2>
+      <CodeBlock
+        language="typescript"
+        code={`import { Worker } from 'worker_threads';
 
-// GOOD — worker thread for CPU work
-const { Worker } = require('worker_threads');
-const result = await new Promise((resolve) => {
-  const worker = new Worker('./heavy-compute.js');
-  worker.on('message', resolve);
-});`} />
+// BAD — blocks event loop for every request
+app.get('/report', (req, res) => {
+  const result = heavyCsvProcessing(data); // synchronous, blocks all requests
+  res.json(result);
+});
+
+// GOOD — offload to worker thread
+app.get('/report', (req, res) => {
+  const worker = new Worker('./workers/csv-processor.js', { workerData: data });
+  worker.once('message', (result) => res.json(result));
+});`}
+      />
     </article>
-  )
+  );
 }

@@ -1,35 +1,41 @@
-import type { Metadata } from 'next'
-import Link from 'next/link'
+import type { Metadata } from "next";
+import { SignalCard } from "@/components/SignalCard";
+import { CodeBlock } from "@/components/CodeBlock";
 
-import { SignalCard } from '@/components/SignalCard'
-import { ArrowLeft } from 'lucide-react'
-
-export const metadata: Metadata = { title: 'fast_query signal' }
+export const metadata: Metadata = { title: "fast_query signal" };
 
 export default function Page() {
   return (
     <article className="prose-doc">
-      <div className="mb-6">
-        <Link href="/docs/signals" className="inline-flex items-center gap-1.5 text-sm hover:opacity-80 transition-opacity" style={{ color: 'var(--primary)' }}>
-          <ArrowLeft className="h-3.5 w-3.5" /> Back to Signals
-        </Link>
-      </div>
-
       <SignalCard
         name="fast_query"
         severity="info"
         summary="Query executed well under configured threshold"
         detail="This query completed quickly and efficiently, indicating good performance. The database is responding as expected with no signs of degradation."
-        
-        
       />
 
-
-      <div className="mt-8 pt-6 border-t" style={{ borderColor: 'var(--border)' }}>
-        <Link href="/docs/signals" className="inline-flex items-center gap-1.5 text-sm hover:opacity-80 transition-opacity" style={{ color: 'var(--muted-foreground)' }}>
-          <ArrowLeft className="h-3.5 w-3.5" /> Back to all signals
-        </Link>
+      <div
+        className="mt-8 pt-6 border-t"
+        style={{ borderColor: "var(--border)" }}
+      >
+        <h2>Using in your exporter</h2>
+        <CodeBlock
+          language="typescript"
+          code={`const monitor = createMonitor({
+  emitPositiveSignals: true,
+  exporter: (event) => {
+    if (event.signals.includes('fast_query')) {
+      // Use as a baseline — alert if this query stops being fast
+      metrics.histogram('db.query.duration', event.durationMs, {
+        model: event.model,
+        operation: event.operation,
+        signal: 'fast_query',
+      });
+    }
+  },
+});`}
+        />
       </div>
     </article>
-  )
+  );
 }

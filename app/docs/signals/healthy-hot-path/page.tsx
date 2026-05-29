@@ -1,35 +1,44 @@
-import type { Metadata } from 'next'
-import Link from 'next/link'
+import type { Metadata } from "next";
+import { SignalCard } from "@/components/SignalCard";
+import { CodeBlock } from "@/components/CodeBlock";
 
-import { SignalCard } from '@/components/SignalCard'
-import { ArrowLeft } from 'lucide-react'
-
-export const metadata: Metadata = { title: 'healthy_hot_path signal' }
+export const metadata: Metadata = { title: "healthy_hot_path signal" };
 
 export default function Page() {
   return (
     <article className="prose-doc">
-      <div className="mb-6">
-        <Link href="/docs/signals" className="inline-flex items-center gap-1.5 text-sm hover:opacity-80 transition-opacity" style={{ color: 'var(--primary)' }}>
-          <ArrowLeft className="h-3.5 w-3.5" /> Back to Signals
-        </Link>
-      </div>
-
       <SignalCard
         name="healthy_hot_path"
         severity="info"
         summary="High-frequency query is fast and stable"
         detail="This query runs frequently and performs well. Continue monitoring for regressions."
-        
-        
       />
 
+      <div
+        className="mt-8 pt-6 border-t"
+        style={{ borderColor: "var(--border)" }}
+      >
+        <h2>What triggers this signal</h2>
+        <CodeBlock
+          language="typescript"
+          code={`// healthy_hot_path fires when a high-frequency query is also fast and stable.
+// It's the resolved state of hot_path — your optimisation worked.
 
-      <div className="mt-8 pt-6 border-t" style={{ borderColor: 'var(--border)' }}>
-        <Link href="/docs/signals" className="inline-flex items-center gap-1.5 text-sm hover:opacity-80 transition-opacity" style={{ color: 'var(--muted-foreground)' }}>
-          <ArrowLeft className="h-3.5 w-3.5" /> Back to all signals
-        </Link>
+const monitor = createMonitor({
+  emitPositiveSignals: true,
+  exporter: (event) => {
+    if (event.signals.includes('hot_path')) {
+      // Still needs work
+      logger.warn('hot_path detected', { model: event.model, durationMs: event.durationMs });
+    }
+    if (event.signals.includes('healthy_hot_path')) {
+      // High-frequency and fast — this is the goal state
+      metrics.increment('db.hot_path.healthy', { model: event.model });
+    }
+  },
+});`}
+        />
       </div>
     </article>
-  )
+  );
 }

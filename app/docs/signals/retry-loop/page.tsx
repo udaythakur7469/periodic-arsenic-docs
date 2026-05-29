@@ -1,19 +1,12 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
 import { CodeBlock } from '@/components/CodeBlock'
 import { SignalCard } from '@/components/SignalCard'
-import { ArrowLeft } from 'lucide-react'
 
 export const metadata: Metadata = { title: 'retry_loop signal' }
 
 export default function Page() {
   return (
     <article className="prose-doc">
-      <div className="mb-6">
-        <Link href="/docs/signals" className="inline-flex items-center gap-1.5 text-sm hover:opacity-80 transition-opacity" style={{ color: 'var(--primary)' }}>
-          <ArrowLeft className="h-3.5 w-3.5" /> Back to Signals
-        </Link>
-      </div>
 
       <SignalCard
         name="retry_loop"

@@ -1,39 +1,59 @@
-import type { Metadata } from 'next'
-import Link from 'next/link'
-import { CodeBlock } from '@/components/CodeBlock'
-import { SignalCard } from '@/components/SignalCard'
-import { ArrowLeft } from 'lucide-react'
+import type { Metadata } from "next";
+import { CodeBlock } from "@/components/CodeBlock";
+import { SignalCard } from "@/components/SignalCard";
+import { Callout } from "@/components/Callout";
 
-export const metadata: Metadata = { title: 'slow_query signal' }
+export const metadata: Metadata = { title: "slow_query signal" };
 
 export default function Page() {
   return (
     <article className="prose-doc">
-      <div className="mb-6">
-        <Link href="/docs/signals" className="inline-flex items-center gap-1.5 text-sm hover:opacity-80 transition-opacity" style={{ color: 'var(--primary)' }}>
-          <ArrowLeft className="h-3.5 w-3.5" /> Back to Signals
-        </Link>
-      </div>
-
       <SignalCard
         name="slow_query"
         severity="warning"
         summary="Query exceeded configured slowQueryThresholdMs"
         detail="This query took longer than expected based on your configured threshold and may impact request latency. Review query execution plan and consider adding indexes."
-        causes={["Missing indexes","Large result set without pagination","Complex aggregation without optimization","Network latency to database"]}
-        fixes={["Analyze with EXPLAIN/explain()","Add appropriate indexes","Optimize query structure","Implement caching for stable data"]}
+        causes={[
+          "Missing indexes",
+          "Large result set without pagination",
+          "Complex aggregation without optimization",
+          "Network latency to database",
+        ]}
+        fixes={[
+          "Analyze with EXPLAIN/explain()",
+          "Add appropriate indexes",
+          "Optimize query structure",
+          "Implement caching for stable data",
+        ]}
       />
 
-      <h2>Example</h2>
-      <CodeBlock language="typescript" code={`// Analyze slow Mongoose query
-const user = await User.findOne({ email }).explain('executionStats');
-console.log(user.executionStats); // shows COLLSCAN vs IXSCAN`} />
+      <Callout type="warning" title="Threshold is configurable">
+        The default <code>slowQueryThresholdMs</code> is 100ms. Tune it per
+        environment — stricter in production, relaxed in development.
+      </Callout>
 
-      <div className="mt-8 pt-6 border-t" style={{ borderColor: 'var(--border)' }}>
-        <Link href="/docs/signals" className="inline-flex items-center gap-1.5 text-sm hover:opacity-80 transition-opacity" style={{ color: 'var(--muted-foreground)' }}>
-          <ArrowLeft className="h-3.5 w-3.5" /> Back to all signals
-        </Link>
-      </div>
+      <h2>Example</h2>
+      <CodeBlock
+        language="typescript"
+        code={`// Diagnose with explain — Mongoose
+const result = await User.findOne({ email }).explain('executionStats');
+// Look for: COLLSCAN (bad) vs IXSCAN (good)
+// Look for: totalDocsExamined >> nReturned (bad)
+console.log(result.executionStats);
+
+// Fix — add the missing index
+await User.collection.createIndex({ email: 1 }, { unique: true });`}
+      />
+
+      <h2>PostgreSQL</h2>
+      <CodeBlock
+        language="sql"
+        code={`-- Find the slow query plan
+EXPLAIN ANALYZE SELECT * FROM users WHERE email = 'user@example.com';
+
+-- If you see Seq Scan, add the index
+CREATE INDEX CONCURRENTLY idx_users_email ON users(email);`}
+      />
     </article>
-  )
+  );
 }

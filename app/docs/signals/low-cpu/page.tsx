@@ -1,35 +1,45 @@
-import type { Metadata } from 'next'
-import Link from 'next/link'
+import type { Metadata } from "next";
+import { SignalCard } from "@/components/SignalCard";
+import { CodeBlock } from "@/components/CodeBlock";
 
-import { SignalCard } from '@/components/SignalCard'
-import { ArrowLeft } from 'lucide-react'
-
-export const metadata: Metadata = { title: 'low_cpu signal' }
+export const metadata: Metadata = { title: "low_cpu signal" };
 
 export default function Page() {
   return (
     <article className="prose-doc">
-      <div className="mb-6">
-        <Link href="/docs/signals" className="inline-flex items-center gap-1.5 text-sm hover:opacity-80 transition-opacity" style={{ color: 'var(--primary)' }}>
-          <ArrowLeft className="h-3.5 w-3.5" /> Back to Signals
-        </Link>
-      </div>
-
       <SignalCard
         name="low_cpu"
         severity="info"
         summary="CPU-efficient query execution"
         detail="CPU-efficient operation detected, indicating well-optimized database operations."
-        
-        
       />
 
+      <div
+        className="mt-8 pt-6 border-t"
+        style={{ borderColor: "var(--border)" }}
+      >
+        <h2>What triggers this signal</h2>
+        <CodeBlock
+          language="typescript"
+          code={`// low_cpu fires when CPU overhead during query execution is minimal.
+// Common in simple indexed lookups and single-row fetches.
+//
+// Use it to confirm your optimisations worked:
 
-      <div className="mt-8 pt-6 border-t" style={{ borderColor: 'var(--border)' }}>
-        <Link href="/docs/signals" className="inline-flex items-center gap-1.5 text-sm hover:opacity-80 transition-opacity" style={{ color: 'var(--muted-foreground)' }}>
-          <ArrowLeft className="h-3.5 w-3.5" /> Back to all signals
-        </Link>
+const monitor = createMonitor({
+  emitPositiveSignals: true,
+  exporter: (event) => {
+    if (event.signals.includes('high_cpu')) {
+      optimise(event);
+    }
+    if (event.signals.includes('low_cpu')) {
+      // Confirm the fix worked — this query is now CPU-efficient
+      metrics.increment('db.cpu.low', { model: event.model });
+    }
+  },
+});`}
+        />
       </div>
     </article>
-  )
+  );
 }
