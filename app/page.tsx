@@ -98,7 +98,7 @@ export default function HomePage() {
                 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(2.5rem, 6vw, 4.5rem)', color: 'var(--foreground)' }}
               >
                 Reveal what&apos;s{' '}
-                <span className="text-blue-gradient">breaking</span>
+                <span className="text-blue-gradient">breakingggggggg</span>
                 <br />
               </h1>
 
