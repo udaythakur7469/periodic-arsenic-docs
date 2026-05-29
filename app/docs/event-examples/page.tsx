@@ -5,9 +5,9 @@ export const metadata: Metadata = { title: 'Event Examples' }
 
 const examples = [
   {
-    title: 'Critical — Hot Path (MongoDB)',
-    badge: 'critical',
-    db: 'mongoose',
+    title: "Critical — Hot Path (MongoDB)",
+    badge: "critical",
+    db: "mongoose",
     code: `{
   "type": "db.query",
   "db": "mongodb",
@@ -25,9 +25,9 @@ const examples = [
 }`,
   },
   {
-    title: 'Critical — N+1 Query (PostgreSQL)',
-    badge: 'critical',
-    db: 'pg',
+    title: "Critical — N+1 Query (PostgreSQL)",
+    badge: "critical",
+    db: "pg",
     code: `{
   "type": "db.query",
   "db": "postgres",
@@ -44,9 +44,9 @@ const examples = [
 }`,
   },
   {
-    title: 'Critical — Redis KEYS Command',
-    badge: 'critical',
-    db: 'ioredis',
+    title: "Critical — Redis KEYS Command",
+    badge: "critical",
+    db: "ioredis",
     code: `{
   "type": "db.query",
   "db": "redis",
@@ -58,13 +58,13 @@ const examples = [
   "severity": "critical",
   "request": { "id": "req_2h7k9m3n", "method": "POST", "route": "/api/cache/clear" },
   "callsite": { "file": "/src/services/cacheService.ts", "line": 56 },
-  "metadata": { "command": "KEYS", "commandCategory": "dangerous", "commandDocs": "https://periodic.dev/redis/keys", "args": ["user:*"] }
+  "metadata": { "command": "KEYS", "commandCategory": "dangerous", "commandDocs": "https://arsenicdev.online/redis/keys", "args": ["user:*"] }
 }`,
   },
   {
-    title: 'Info — Healthy Query (Prisma)',
-    badge: 'info',
-    db: 'prisma',
+    title: "Info — Healthy Query (Prisma)",
+    badge: "info",
+    db: "prisma",
     code: `{
   "type": "db.query",
   "db": "postgres",
@@ -81,9 +81,9 @@ const examples = [
 }`,
   },
   {
-    title: 'Warning — Background Job (No request context)',
-    badge: 'warning',
-    db: 'prisma',
+    title: "Warning — Background Job (No request context)",
+    badge: "warning",
+    db: "prisma",
     code: `{
   "type": "db.query",
   "db": "postgres",
@@ -99,7 +99,7 @@ const examples = [
   "metadata": { "payloadSize": 3145728, "rowsAffected": 50000 }
 }`,
   },
-]
+];
 
 const badgeStyle: Record<string, string> = {
   critical: 'bg-red-950/50 text-red-400 border-red-900/50',

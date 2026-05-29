@@ -9,10 +9,10 @@ export const metadata: Metadata = {
   },
   description:
     "Production-grade semantic runtime monitoring for Node.js. 30+ signals, zero dependencies, multi-database support.",
-  metadataBase: new URL("https://periodic.dev"),
+  metadataBase: new URL("https://arsenicdev.online"),
   openGraph: {
     type: "website",
-    url: "https://periodic.dev",
+    url: "https://arsenicdev.online",
     siteName: "@periodic/arsenic",
     title: "@periodic/arsenic — Semantic Runtime Monitoring for Node.js",
     description:

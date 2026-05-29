@@ -13,7 +13,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - `<Breadcrumbs />` component — automatic breadcrumb trail in the docs layout, driven from `lib/navigation.ts`
 - `<TableOfContents />` component — "On this page" right-side anchor panel for `h2`/`h3` headings, visible at `xl` breakpoint
 - `lib/search-index.ts` — static search record array covering all pages and all 30 signals
-- OpenGraph and Twitter card metadata in `app/layout.tsx` with `metadataBase` pointing to `https://periodic.dev`
+- OpenGraph and Twitter card metadata in `app/layout.tsx` with `metadataBase` pointing to `https://arsenicdev.online`
 - `public/og.png` — 1200×630 social preview image
 - `scroll-margin-top` on `.prose-doc h2` and `.prose-doc h3` to prevent sticky navbar overlap on anchor scroll
 - `README.md`, `CONTRIBUTING.md`, `ARCHITECTURE.md`, `CHANGELOG.md` — project documentation
