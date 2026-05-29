@@ -26,7 +26,7 @@ This repository contains the full source code for the `@periodic/arsenic` docume
 
 The site documents:
 
-- **30+ signals** — semantic runtime signals emitted by the library (`hot_path`, `n_plus_one`, `slow_query`, etc.)
+- **50+ signals** — semantic runtime signals emitted by the library (`hot_path`, `n_plus_one`, `slow_query`, etc.)
 - **4 database adapters** — Mongoose, Prisma, PostgreSQL (`pg`), Redis
 - **2 framework integrations** — Express, Fastify
 - **Exporters** — OpenTelemetry, Datadog, Prometheus, JSON
@@ -101,7 +101,7 @@ arsenic-docs/
 │       ├── api-reference/
 │       ├── setup/
 │       └── signals/
-│           ├── page.tsx            # Signals index — all 30+ signals
+│           ├── page.tsx            # Signals index — all 50+ signals
 │           ├── hot-path/
 │           ├── n-plus-one/
 │           ├── unbounded-query/

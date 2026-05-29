@@ -15,7 +15,7 @@ export default function CoreConceptsPage() {
       <ul>
         <li>No global state — each monitor is fully independent</li>
         <li>Correlates database queries to active HTTP requests via AsyncLocalStorage</li>
-        <li>Detects 30+ semantic signals across three severity levels</li>
+        <li>Detects 50+ semantic signals across three severity levels</li>
         <li>Never blocks — all exports are asynchronous and isolated</li>
         <li>Provides callsite attribution (file + line number) for every query</li>
       </ul>

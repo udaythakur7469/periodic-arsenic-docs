@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     default: "@periodic/arsenic — Semantic Runtime Monitoring for Node.js",
   },
   description:
-    "Production-grade semantic runtime monitoring for Node.js. 30+ signals, zero dependencies, multi-database support.",
+    "Production-grade semantic runtime monitoring for Node.js. 50+ signals, zero dependencies, multi-database support.",
   metadataBase: new URL("https://arsenicdev.online"),
   openGraph: {
     type: "website",
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     siteName: "@periodic/arsenic",
     title: "@periodic/arsenic — Semantic Runtime Monitoring for Node.js",
     description:
-      "Production-grade semantic runtime monitoring for Node.js. 30+ signals, zero dependencies, request-correlated database observability.",
+      "Production-grade semantic runtime monitoring for Node.js. 50+ signals, zero dependencies, request-correlated database observability.",
     images: [
       {
         url: "/og.png", // 1200×630px image — see note below
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "@periodic/arsenic — Semantic Runtime Monitoring",
     description:
-      "Production-grade semantic runtime monitoring for Node.js. 30+ signals, zero dependencies.",
+      "Production-grade semantic runtime monitoring for Node.js. 50+ signals, zero dependencies.",
     images: ["/og.png"],
   },
 };

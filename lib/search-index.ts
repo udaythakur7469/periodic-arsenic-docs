@@ -54,7 +54,7 @@ export const searchIndex: SearchRecord[] = [
     href: "/docs/signals",
     section: "Core Concepts",
     description:
-      "30+ signals across Critical, Warning, and Info severity levels.",
+      "50+ signals across Critical, Warning, and Info severity levels.",
     tags: ["signals", "severity", "critical", "warning", "info"],
   },
   {

@@ -23,7 +23,7 @@ export const navigation: NavSection[] = [
     section: 'Core Concepts',
     items: [
       { label: 'Core Concepts',   href: '/docs/core-concepts' },
-      { label: 'Signals',         href: '/docs/signals', badge: '30+' },
+      { label: 'Signals',         href: '/docs/signals', badge: '50+' },
       { label: 'Event Examples',  href: '/docs/event-examples' },
       { label: 'Patterns',        href: '/docs/patterns' },
     ],

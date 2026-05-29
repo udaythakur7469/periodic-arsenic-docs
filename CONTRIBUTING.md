@@ -57,7 +57,7 @@ You do not need to be a developer to contribute. The most valuable contributions
 
 ```bash
 # 1. Fork the repo on GitHub, then clone your fork
-git clone https://github.com/YOUR_USERNAME/arsenic-docs.git
+git clone https://github.com/udaythakur7469/arsenic-docs.git
 cd arsenic-docs
 
 # 2. Install dependencies
