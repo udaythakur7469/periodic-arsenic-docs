@@ -55,26 +55,35 @@ function useActiveHeading(headings: Heading[]) {
   useEffect(() => {
     if (headings.length === 0) return;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        // Find the topmost visible heading
-        const visible = entries
-          .filter((e) => e.isIntersecting)
-          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+    function onScroll() {
+      // If we're at (or very near) the bottom of the page, always highlight the last heading
+      const scrollBottom = window.scrollY + window.innerHeight;
+      const pageHeight = document.documentElement.scrollHeight;
+      if (pageHeight - scrollBottom < 8) {
+        setActive(headings[headings.length - 1].id);
+        return;
+      }
 
-        if (visible.length > 0) {
-          setActive(visible[0].target.id);
+      // Otherwise find the last heading whose top is above the 20% mark from the top
+      const scrollTop = window.scrollY + 80; // offset for fixed header
+      let current = headings[0].id;
+      for (const h of headings) {
+        const el = document.getElementById(h.id);
+        if (
+          el &&
+          el.getBoundingClientRect().top + window.scrollY <=
+            scrollTop + window.innerHeight * 0.2
+        ) {
+          current = h.id;
         }
-      },
-      { rootMargin: "-64px 0% -70% 0%", threshold: 0 },
-    );
+      }
+      setActive(current);
+    }
 
-    headings.forEach((h) => {
-      const el = document.getElementById(h.id);
-      if (el) observer.observe(el);
-    });
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll(); // run once on mount to set initial state
 
-    return () => observer.disconnect();
+    return () => window.removeEventListener("scroll", onScroll);
   }, [headings]);
 
   return active;
