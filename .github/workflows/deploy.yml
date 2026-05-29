@@ -22,7 +22,7 @@ jobs:
           script: |
             cd ${{ secrets.EC2_APP_DIR }}
             git pull origin main
-            docker build -t arsenic-docs .
+            docker build --no-cache -t arsenic-docs . || { echo "❌ Build failed"; exit 1; }
             docker stop arsenic-docs || true
             docker rm arsenic-docs || true
             docker run -d \
