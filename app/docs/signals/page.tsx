@@ -211,8 +211,35 @@ const warningSignals = [
     name: "redis_scan",
     href: "/docs/signals/redis-scan",
     summary: "Full dataset scan when iterated to completion",
-    issue: "SCAN/SSCAN/HSCAN/ZSCAN are O(N) when fully iterated.",
+    issue: "SCAN are O(N) when fully iterated.",
     fix: "Use count hints; move full scans to background jobs.",
+  },
+  {
+    name: "redis_sscan",
+    href: "/docs/signals/redis-sscan",
+    summary:
+      "Cursor-based set member iteration — O(N) when iterated to completion",
+    issue:
+      "SSCAN iterates all set members across batches — same total cost as SMEMBERS when run to completion.",
+    fix: "Use COUNT hints. Prefer SISMEMBER for point lookups on small sets.",
+  },
+  {
+    name: "redis_hscan",
+    href: "/docs/signals/redis-hscan",
+    summary:
+      "Cursor-based hash field iteration — O(N) when iterated to completion",
+    issue:
+      "HSCAN iterates all hash fields — same total cost as HGETALL when run to completion.",
+    fix: "Use COUNT hints. Use HGET/HMGET for targeted field access.",
+  },
+  {
+    name: "redis_zscan",
+    href: "/docs/signals/redis-zscan",
+    summary:
+      "Cursor-based sorted set iteration — O(N) when iterated to completion",
+    issue:
+      "ZSCAN iterates all sorted set members — same total cost as ZRANGE 0 -1 when run to completion.",
+    fix: "Use COUNT hints. Use ZSCORE or ZRANK for point lookups.",
   },
   {
     name: "redis_sunion",
@@ -421,6 +448,23 @@ const infoSignals = [
     issue: "High-frequency path with consistently fast execution. Healthy.",
     fix: undefined,
   },
+  {
+    name: "redis_multi",
+    href: "/docs/signals/redis-multi",
+    summary: "Transaction block opened — commands queued until EXEC or DISCARD",
+    issue:
+      "MULTI itself is O(1). Arsenic tracks it to observe transaction boundaries and detect long or unmatched blocks.",
+    fix: undefined,
+  },
+  {
+    name: "redis_exec",
+    href: "/docs/signals/redis-exec",
+    summary:
+      "Transaction executed — duration reflects cumulative cost of all queued commands",
+    issue:
+      "A slow EXEC means the queued commands are expensive, not EXEC itself. Always handle the null return from a WATCH conflict.",
+    fix: undefined,
+  },
 ];
 
 function SignalRow({
@@ -492,10 +536,10 @@ export default function SignalsPage() {
     <article className="prose-doc">
       <h1>Signals Reference</h1>
       <p>
-        Arsenic detects <strong>57 semantic signals</strong> across three
-        severity levels — including 27 Redis-specific command signals. Every
-        signal includes a human-readable explanation — not just a metric. Click
-        any signal to view its full documentation page.
+        Arsenic detects <strong>62 signals</strong> across three severity levels
+        — 30 semantic signals plus 32 Redis command signals. Every signal
+        includes a human-readable explanation — not just a metric. Click any
+        signal to view its full documentation page.
       </p>
 
       <div className="not-prose grid grid-cols-3 gap-3 my-8">
@@ -508,14 +552,14 @@ export default function SignalsPage() {
             border: "border-red-200/50 dark:border-red-900/50",
           },
           {
-            label: "29 Warning",
+            label: "32 Warning",
             count: 29,
             bg: "bg-amber-50 dark:bg-amber-950/30",
             text: "text-amber-700 dark:text-amber-400",
             border: "border-amber-200/50 dark:border-amber-900/50",
           },
           {
-            label: "14 Info",
+            label: "16 Info",
             count: 14,
             bg: "bg-blue-50 dark:bg-blue-950/30",
             text: "text-blue-600 dark:text-blue-400",
@@ -550,7 +594,7 @@ export default function SignalsPage() {
         ))}
       </div>
 
-      <h2 id="warning">⚠️ Warning Signals (29)</h2>
+      <h2 id="warning">⚠️ Warning Signals (32)</h2>
       <p>
         Issues worth tracking before they escalate. Route these to Slack or
         dashboards.
@@ -561,7 +605,7 @@ export default function SignalsPage() {
         ))}
       </div>
 
-      <h2 id="info">ℹ️ Info Signals (14 — opt-in)</h2>
+      <h2 id="info">ℹ️ Info Signals (16 — opt-in)</h2>
       <p>
         Positive signals confirming healthy patterns. Disabled by default to
         reduce noise. Enable with <code>emitPositiveSignals: true</code>.

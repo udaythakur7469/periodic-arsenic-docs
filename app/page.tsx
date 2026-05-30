@@ -9,7 +9,7 @@ const features = [
   { Icon: Zap,         title: 'Zero Dependencies',    desc: 'Pure TypeScript core. No runtime bloat, no side effects on import. Small, fast, and safe.' },
   { Icon: Link2,       title: 'Request Correlation',  desc: 'Every query linked to its HTTP request via AsyncLocalStorage. Fully automatic, zero boilerplate.' },
   { Icon: MapPin,      title: 'Callsite Attribution', desc: 'Exact file and line number for every slow query. Know immediately which code to fix.' },
-  { Icon: Radio,       title: '50+ Semantic Signals', desc: 'Critical, warning, and info. Hot path, N+1, unbounded, fan-out — explained, not just detected.' },
+  { Icon: Radio,       title: '60+ Semantic Signals', desc: 'Critical, warning, and info. Hot path, N+1, unbounded, fan-out — explained, not just detected.' },
   { Icon: Database,    title: 'Multi-Database',       desc: 'Mongoose, Prisma, pg, Redis. Drop in an adapter for your stack and get instant observability.' },
   { Icon: UploadCloud, title: 'Exporter-First',       desc: 'Send events anywhere. PagerDuty, Slack, Datadog, OpenTelemetry. You own the destination.' },
 ]
@@ -107,7 +107,7 @@ export default function HomePage() {
                 <code className="font-mono text-[0.95em] px-1.5 py-0.5 rounded" style={{ fontFamily: 'var(--font-mono)', background: 'oklch(0.488 0.243 264.376 / 0.1)', color: 'var(--primary)', border: '1px solid oklch(0.488 0.243 264.376 / 0.2)' }}>
                   @periodic/arsenic
                 </code>{' '}
-                is production-grade semantic runtime monitoring for Node.js. It doesn&apos;t just tell you something is slow — it tells you <em>exactly why</em>, with callsite attribution, request correlation, and 50+ classified signals.
+                is production-grade semantic runtime monitoring for Node.js. It doesn&apos;t just tell you something is slow — it tells you <em>exactly why</em>, with callsite attribution, request correlation, and 60+ classified signals.
               </p>
 
               {/* CTAs */}
@@ -133,7 +133,7 @@ export default function HomePage() {
               {/* Stats */}
               <div className="flex flex-wrap gap-3 animate-slide-up stagger-5">
                 {[
-                  { v: '50+', l: 'Signals' },
+                  { v: '60+', l: 'Signals' },
                   { v: '0',   l: 'Dependencies' },
                   { v: '6',   l: 'Databases' },
                   { v: '10',  l: 'Periodic packages' },
@@ -249,7 +249,7 @@ export default function HomePage() {
               <div>
                 <p className="text-xs font-bold uppercase tracking-widest mb-3" style={{ color: 'var(--primary)', fontFamily: 'var(--font-mono)' }}>Signal Intelligence</p>
                 <h2 className="font-extrabold text-4xl tracking-tight mb-5" style={{ fontFamily: 'var(--font-display)', color: 'var(--foreground)' }}>
-                  50+ signals.<br />Three severity levels.
+                  60+ signals.<br />Three severity levels.
                 </h2>
                 <p className="text-[1.0625rem] mb-7 leading-relaxed" style={{ color: 'var(--muted-foreground)' }}>
                   Every event is automatically classified and explained. Critical signals go to PagerDuty.
@@ -257,9 +257,9 @@ export default function HomePage() {
                 </p>
                 <div className="flex gap-2 mb-8">
                   {[
-                    { label: '16 Critical', cls: 'bg-red-50 dark:bg-red-950/40 text-red-700 dark:text-red-400 border-red-200/50 dark:border-red-900/50' },
-                    { label: '9 Warning',   cls: 'bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-400 border-amber-200/50 dark:border-amber-900/50' },
-                    { label: '14 Info',     cls: 'bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 border-blue-200/50 dark:border-blue-900/50' },
+                    { label: '14 Critical', cls: 'bg-red-50 dark:bg-red-950/40 text-red-700 dark:text-red-400 border-red-200/50 dark:border-red-900/50' },
+                    { label: '32 Warning',   cls: 'bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-400 border-amber-200/50 dark:border-amber-900/50' },
+                    { label: '16 Info',     cls: 'bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 border-blue-200/50 dark:border-blue-900/50' },
                   ].map(({ label, cls }) => (
                     <span key={label} className={`text-sm font-semibold px-3 py-1.5 rounded-full border ${cls}`}>{label}</span>
                   ))}
@@ -269,7 +269,7 @@ export default function HomePage() {
                   className="inline-flex items-center gap-2 text-base font-semibold px-5 py-2.5 rounded-xl border transition-all hover:bg-accent"
                   style={{ borderColor: 'var(--border)', color: 'var(--foreground)' }}
                 >
-                  View all 50+ signals <ChevronRight className="h-4 w-4" />
+                  View all 60+ signals <ChevronRight className="h-4 w-4" />
                 </Link>
               </div>
 
