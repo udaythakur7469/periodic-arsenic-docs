@@ -135,7 +135,7 @@ export default function HomePage() {
                 {[
                   { v: '60+', l: 'Signals' },
                   { v: '0',   l: 'Dependencies' },
-                  { v: '6',   l: 'Databases' },
+                  { v: '4',   l: 'Databases' },
                   { v: '10',  l: 'Periodic packages' },
                 ].map(({ v, l }) => (
                   <div
