@@ -122,7 +122,7 @@ All component styling is Tailwind utility classes with inline CSS variables for 
 
 **What it does:** Tokenises code strings and wraps tokens in `<span>` elements with colour classes.
 
-**Why not Shiki?** Shiki's WASM bundle is ~1.8MB. For a documentation site that already has 50+ signal pages, adding 1.8MB of JS to every code block is not justified. The custom highlighter is ~80 lines of JavaScript and handles the four languages used on this site (TypeScript, JSON, Bash, CSS) with a multi-pass approach:
+**Why not Shiki?** Shiki's WASM bundle is ~1.8MB. For a documentation site that already has 60+ signal pages, adding 1.8MB of JS to every code block is not justified. The custom highlighter is ~80 lines of JavaScript and handles the four languages used on this site (TypeScript, JSON, Bash, CSS) with a multi-pass approach:
 
 1. Strings are masked with placeholder tokens before keyword matching. This prevents `"const"` inside a string from being coloured as a keyword.
 2. Keywords, types, operators, and comments are matched with targeted regex.

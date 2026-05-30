@@ -289,7 +289,7 @@ export default function HomePage() {
                 ))}
                 <div className="pl-5 pt-1">
                   <Link href="/docs/signals" className="text-sm font-medium flex items-center gap-1 transition-opacity hover:opacity-80" style={{ color: 'var(--primary)' }}>
-                    View 24 more signals <ArrowRight className="h-3.5 w-3.5" />
+                    View 56 more signals <ArrowRight className="h-3.5 w-3.5" />
                   </Link>
                 </div>
               </div>

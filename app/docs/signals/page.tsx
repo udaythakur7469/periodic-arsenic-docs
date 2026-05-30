@@ -553,14 +553,14 @@ export default function SignalsPage() {
           },
           {
             label: "32 Warning",
-            count: 29,
+            count: 32,
             bg: "bg-amber-50 dark:bg-amber-950/30",
             text: "text-amber-700 dark:text-amber-400",
             border: "border-amber-200/50 dark:border-amber-900/50",
           },
           {
             label: "16 Info",
-            count: 14,
+            count: 16,
             bg: "bg-blue-50 dark:bg-blue-950/30",
             text: "text-blue-600 dark:text-blue-400",
             border: "border-blue-200/50 dark:border-blue-900/50",

@@ -8,7 +8,7 @@ const adapters = [
   { title: 'Mongoose', href: '/docs/adapters/mongoose', desc: 'MongoDB via Mongoose ODM', badge: '🍃', status: 'Full support' },
   { title: 'Prisma',   href: '/docs/adapters/prisma',   desc: 'PostgreSQL, MySQL, SQLite, CockroachDB', badge: '🔷', status: 'Full support' },
   { title: 'pg',       href: '/docs/adapters/pg',       desc: 'PostgreSQL raw driver', badge: '🐘', status: 'Full support' },
-  { title: 'Redis',    href: '/docs/adapters/redis',    desc: '29 commands classified + monitoring', badge: '🔴', status: 'Full support + Command Monitoring' },
+  { title: 'Redis',    href: '/docs/adapters/redis',    desc: '32 commands classified + monitoring', badge: '🔴', status: 'Full support + Command Monitoring' },
 ]
 
 export default function AdaptersPage() {

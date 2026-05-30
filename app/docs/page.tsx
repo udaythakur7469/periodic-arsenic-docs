@@ -23,12 +23,12 @@ export default function DocsPage() {
 
       <h2>Key capabilities</h2>
       <ul>
-        <li><strong>50+ production signals</strong> across Critical (16), Warning (9), and Info (14) severity levels</li>
+        <li><strong>60+ production signals</strong> across Critical (14), Warning (32), and Info (16) severity levels</li>
         <li><strong>Request correlation</strong> — every query linked to its HTTP request via AsyncLocalStorage</li>
         <li><strong>Callsite attribution</strong> — exact file and line for every slow query</li>
         <li><strong>Multi-database</strong> — Prisma, Mongoose, PostgreSQL (pg), and Redis</li>
         <li><strong>Multi-framework</strong> — Express and Fastify</li>
-        <li><strong>Redis command monitoring</strong> — 29 commands classified (dangerous, blocking, slow, normal)</li>
+        <li><strong>Redis command monitoring</strong> — 32 commands classified (dangerous, blocking, slow, normal)</li>
         <li><strong>OpenTelemetry exporter</strong> — built-in OTEL support</li>
         <li><strong>Zero dependencies</strong> — pure TypeScript monitoring core</li>
         <li><strong>No global state</strong> — safe for multi-tenant applications</li>
@@ -45,7 +45,7 @@ export default function DocsPage() {
           { title: 'Installation',    desc: 'npm install and peer deps',       href: '/docs/installation' },
           { title: 'Quick Start',     desc: 'Up and running in 5 minutes',     href: '/docs/quickstart' },
           { title: 'Core Concepts',   desc: 'Monitors, adapters, exporters',   href: '/docs/core-concepts' },
-          { title: 'Signals',         desc: '50+ signals with full reference', href: '/docs/signals' },
+          { title: 'Signals',         desc: '60+ signals with full reference', href: '/docs/signals' },
           { title: 'Event Examples',  desc: 'Real ForgeEvent JSON output',     href: '/docs/event-examples' },
           { title: 'Ecosystem',       desc: '10 Periodic packages',            href: '/ecosystem' },
         ].map(card => (

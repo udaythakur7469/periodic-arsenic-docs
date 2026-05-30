@@ -9,7 +9,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## [Unreleased]
 
 ### Added
-- `<Search />` component — Cmd+K fuzzy search modal powered by Fuse.js across all 50+ doc records
+- `<Search />` component — Cmd+K fuzzy search modal powered by Fuse.js across all 60+ doc records
 - `<Breadcrumbs />` component — automatic breadcrumb trail in the docs layout, driven from `lib/navigation.ts`
 - `<TableOfContents />` component — "On this page" right-side anchor panel for `h2`/`h3` headings, visible at `xl` breakpoint
 - `lib/search-index.ts` — static search record array covering all pages and all 30 signals
