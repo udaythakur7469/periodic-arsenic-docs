@@ -11,57 +11,54 @@ export interface NavSection {
 
 export const navigation: NavSection[] = [
   {
-    section: 'Getting Started',
+    section: "Getting Started",
     items: [
-      { label: 'Introduction',    href: '/docs' },
-      { label: 'Installation',    href: '/docs/installation' },
-      { label: 'Quick Start',     href: '/docs/quickstart' },
-      { label: 'Configuration',   href: '/docs/configuration' },
+      { label: "Introduction", href: "/docs" },
+      { label: "Installation", href: "/docs/installation" },
+      { label: "Quick Start", href: "/docs/quickstart" },
+      { label: "Configuration", href: "/docs/configuration" },
     ],
   },
   {
-    section: 'Core Concepts',
+    section: "Core Concepts",
     items: [
-      { label: 'Core Concepts',   href: '/docs/core-concepts' },
-      { label: 'Signals',         href: '/docs/signals', badge: '50+' },
-      { label: 'Event Examples',  href: '/docs/event-examples' },
-      { label: 'Patterns',        href: '/docs/patterns' },
+      { label: "Core Concepts", href: "/docs/core-concepts" },
+      { label: "Signals", href: "/docs/signals", badge: "50+ cmds" },
+      { label: "Event Examples", href: "/docs/event-examples" },
+      { label: "Patterns", href: "/docs/patterns" },
     ],
   },
   {
-    section: 'Database Adapters',
+    section: "Database Adapters",
     items: [
-      { label: 'Adapters Overview', href: '/docs/adapters' },
-      { label: 'Mongoose',          href: '/docs/adapters/mongoose' },
-      { label: 'Prisma',            href: '/docs/adapters/prisma' },
-      { label: 'PostgreSQL (pg)',   href: '/docs/adapters/pg' },
-      { label: 'Redis',             href: '/docs/adapters/redis', badge: '29 cmds' },
+      { label: "Adapters Overview", href: "/docs/adapters" },
+      { label: "Mongoose", href: "/docs/adapters/mongoose" },
+      { label: "Prisma", href: "/docs/adapters/prisma" },
+      { label: "PostgreSQL (pg)", href: "/docs/adapters/pg" },
+      { label: "Redis", href: "/docs/adapters/redis", badge: "30+ cmds" },
     ],
   },
 
-
   {
-    section: 'Frameworks',
+    section: "Frameworks",
     items: [
-      { label: 'Express',           href: '/docs/frameworks/express' },
-      { label: 'Fastify',           href: '/docs/frameworks/fastify' },
+      { label: "Express", href: "/docs/frameworks/express" },
+      { label: "Fastify", href: "/docs/frameworks/fastify" },
     ],
   },
   {
-    section: 'Exporters',
-    items: [
-      { label: 'Exporters',         href: '/docs/exporters' },
-    ],
+    section: "Exporters",
+    items: [{ label: "Exporters", href: "/docs/exporters" }],
   },
   {
-    section: 'Reference',
+    section: "Reference",
     items: [
-      { label: 'API Reference',     href: '/docs/api-reference' },
-      { label: 'Setup Guide',       href: '/docs/setup' },
-      { label: 'Ecosystem',         href: '/ecosystem', badge: '10 pkgs' },
+      { label: "API Reference", href: "/docs/api-reference" },
+      { label: "Setup Guide", href: "/docs/setup" },
+      { label: "Ecosystem", href: "/ecosystem", badge: "10 pkgs" },
     ],
   },
-]
+];
 
 export const signalsList = [
   // Critical
@@ -126,6 +123,9 @@ export const signalsList = [
   { name: "redis_lrange", severity: "warning", slug: "redis-lrange" },
   { name: "redis_sort", severity: "warning", slug: "redis-sort" },
   { name: "redis_scan", severity: "warning", slug: "redis-scan" },
+  { name: "redis_sscan", severity: "warning", slug: "redis-sscan" },
+  { name: "redis_hscan", severity: "warning", slug: "redis-hscan" },
+  { name: "redis_zscan", severity: "warning", slug: "redis-zscan" },
   { name: "redis_sunion", severity: "warning", slug: "redis-sunion" },
   { name: "redis_sinter", severity: "warning", slug: "redis-sinter" },
   { name: "redis_sdiff", severity: "warning", slug: "redis-sdiff" },
@@ -149,4 +149,6 @@ export const signalsList = [
   { name: "redis_zunionstore", severity: "warning", slug: "redis-zunionstore" },
   { name: "redis_object", severity: "warning", slug: "redis-object" },
   { name: "redis_wait", severity: "warning", slug: "redis-wait" },
+  { name: "redis_multi", severity: "info", slug: "redis-multi" },
+  { name: "redis_exec", severity: "info", slug: "redis-exec" },
 ] as const;

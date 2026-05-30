@@ -13,7 +13,7 @@ export default function RedisAdapterPage() {
         The Redis adapter monitors every command via ioredis or node-redis,
         automatically classifying each into one of four categories:{" "}
         <strong>dangerous</strong>, <strong>blocking</strong>,{" "}
-        <strong>slow</strong>, or <strong>normal</strong>. 29 commands are
+        <strong>slow</strong>, or <strong>normal</strong>. 32 commands are
         explicitly documented.
       </p>
 
@@ -53,8 +53,10 @@ redisAdapter(monitor, redis);`}
 const info = getRedisCommandInfo('KEYS');
 // { command: 'KEYS', category: 'dangerous', docs: 'https://arsenicdev.online/redis/keys' }
 
+// Commands not in the explicit list default to 'normal' — no signal page, fallback URL
 const info2 = getRedisCommandInfo('GET');
 // { command: 'GET', category: 'normal', docs: 'https://arsenicdev.online/redis/get' }
+// 'normal' category commands emit no warning/critical signals under standard usage
 
 // Array of all slow command names
 console.log(SLOW_REDIS_COMMANDS); // ['HGETALL', 'SMEMBERS', ...]`}
@@ -127,6 +129,13 @@ console.log(SLOW_REDIS_COMMANDS); // ['HGETALL', 'SMEMBERS', ...]`}
         ))}
       </div>
 
+      <Callout type="danger" title="Never use KEYS in production">
+        <code>KEYS</code> performs a full keyspace scan and blocks ALL other
+        Redis operations while running. On a database with millions of keys,
+        this can stall Redis for seconds. Use <code>SCAN</code> with a cursor
+        instead.
+      </Callout>
+
       <h2>⚠️ Blocking Commands (4)</h2>
       <p>
         Commands that block the calling client until data is available or a
@@ -194,7 +203,7 @@ console.log(SLOW_REDIS_COMMANDS); // ['HGETALL', 'SMEMBERS', ...]`}
         ))}
       </div>
 
-      <h2>⏱️ Slow Commands (22)</h2>
+      <h2>⏱️ Slow Commands (23)</h2>
       <p>
         O(N) or worse complexity. Safe in small datasets but can degrade under
         load.
@@ -227,41 +236,113 @@ console.log(SLOW_REDIS_COMMANDS); // ['HGETALL', 'SMEMBERS', ...]`}
             fix: "Pre-sort at write time using sorted sets.",
           },
           {
-            cmd: "SCAN / SSCAN / HSCAN / ZSCAN",
+            cmd: "SCAN",
             slug: "redis-scan",
-            issue: "O(N) across full dataset when iterated to completion.",
-            fix: "Use count hints, move full scans to background jobs.",
+            issue: "O(N) across full keyspace when iterated to completion.",
+            fix: "Use COUNT hints; move full scans to background jobs.",
           },
           {
-            cmd: "SUNION / SINTER / SDIFF",
-            slug: "redis-sunion",
-            issue: "Set operations — O(N) across all input sets.",
-            fix: "Cache results for stable inputs.",
+            cmd: "SSCAN",
+            slug: "redis-sscan",
+            issue: "O(N) across all set members when iterated to completion.",
+            fix: "Use SISMEMBER for lookups; SSCAN with COUNT hints in background jobs.",
           },
           {
-            cmd: "SUNIONSTORE / SINTERSTORE / SDIFFSTORE",
-            slug: "redis-sunionstore",
-            issue: "Same as above but also writes result.",
-            fix: "Run as background job, cache with TTL.",
+            cmd: "HSCAN",
+            slug: "redis-hscan",
+            issue: "O(N) across all hash fields when iterated to completion.",
+            fix: "Use HGET/HMGET for targeted access; move full iterations to background jobs.",
           },
           {
-            cmd: "ZRANGE / ZRANGEBYSCORE / ZRANGEBYLEX",
-            slug: "redis-zrange",
-            issue: "Range queries on sorted set — linear in elements returned.",
-            fix: "Paginate with LIMIT offset count.",
-          },
-          {
-            cmd: "ZREVRANGE / ZREVRANGEBYSCORE",
-            slug: "redis-zrevrange",
-            issue: "Reverse range queries on sorted set.",
-            fix: "Paginate with LIMIT.",
-          },
-          {
-            cmd: "ZINTERSTORE / ZUNIONSTORE",
-            slug: "redis-zinterstore",
+            cmd: "ZSCAN",
+            slug: "redis-zscan",
             issue:
-              "Sorted set intersection/union — expensive with large inputs.",
-            fix: "Cache results, run in background workers.",
+              "O(N) across all sorted set members when iterated to completion.",
+            fix: "Use ZRANGE/ZRANGEBYSCORE for bounded queries; ZSCORE/ZRANK for point lookups.",
+          },
+          {
+            cmd: "SUNION",
+            slug: "redis-sunion",
+            issue: "Set union — O(N) across all input sets.",
+            fix: "Cache results with SUNIONSTORE + EXPIRE.",
+          },
+          {
+            cmd: "SINTER",
+            slug: "redis-sinter",
+            issue: "Set intersection — O(N×M) across input sets.",
+            fix: "Cache with SINTERSTORE; place the smallest set first.",
+          },
+          {
+            cmd: "SDIFF",
+            slug: "redis-sdiff",
+            issue: "Set difference — O(N) across all input sets combined.",
+            fix: "Cache with SDIFFSTORE; denormalise at write time for frequent diffs.",
+          },
+          {
+            cmd: "SUNIONSTORE",
+            slug: "redis-sunionstore",
+            issue:
+              "Same as SUNION but also writes result — adds a write on top of O(N) computation.",
+            fix: "Run as background job with TTL on destination key.",
+          },
+          {
+            cmd: "SINTERSTORE",
+            slug: "redis-sinterstore",
+            issue: "Same as SINTER but also writes result.",
+            fix: "Schedule as background job; TTL the result key.",
+          },
+          {
+            cmd: "SDIFFSTORE",
+            slug: "redis-sdiffstore",
+            issue: "Same as SDIFF but also writes result.",
+            fix: "Run in background workers; cache result with TTL.",
+          },
+          {
+            cmd: "ZRANGE",
+            slug: "redis-zrange",
+            issue:
+              "Sorted set range by rank — linear in elements returned. ZRANGE 0 -1 fetches the entire set.",
+            fix: "Paginate with explicit rank bounds or LIMIT offset count.",
+          },
+          {
+            cmd: "ZRANGEBYSCORE",
+            slug: "redis-zrangebyscore",
+            issue: "Sorted set range by score — linear in elements returned.",
+            fix: "Narrow the score range; paginate with LIMIT offset count.",
+          },
+          {
+            cmd: "ZRANGEBYLEX",
+            slug: "redis-zrangebylex",
+            issue:
+              "Sorted set range by lex order — linear in elements matched.",
+            fix: "Use tight lex bounds; paginate with LIMIT; avoid open-ended ranges.",
+          },
+          {
+            cmd: "ZREVRANGE",
+            slug: "redis-zrevrange",
+            issue:
+              "Reverse rank range on sorted set — linear in elements returned.",
+            fix: "Specify tight rank bounds; paginate. Prefer ZRANGE ... REV LIMIT in Redis 6.2+.",
+          },
+          {
+            cmd: "ZREVRANGEBYSCORE",
+            slug: "redis-zrevrangebyscore",
+            issue:
+              "Reverse score range on sorted set — linear in elements returned.",
+            fix: "Always bound the score range; paginate with LIMIT offset count.",
+          },
+          {
+            cmd: "ZINTERSTORE",
+            slug: "redis-zinterstore",
+            issue: "Sorted set intersection — expensive with large input sets.",
+            fix: "Cache results; run in background workers.",
+          },
+          {
+            cmd: "ZUNIONSTORE",
+            slug: "redis-zunionstore",
+            issue:
+              "Sorted set union — O(N) + O(M log M) where M is result size.",
+            fix: "Cache with TTL; schedule as background job.",
           },
           {
             cmd: "OBJECT",
@@ -318,12 +399,63 @@ console.log(SLOW_REDIS_COMMANDS); // ['HGETALL', 'SMEMBERS', ...]`}
         ))}
       </div>
 
-      <Callout type="danger" title="Never use KEYS in production">
-        <code>KEYS</code> performs a full keyspace scan and blocks ALL other
-        Redis operations while running. On a database with millions of keys,
-        this can stall Redis for seconds. Use <code>SCAN</code> with a cursor
-        instead.
-      </Callout>
+      <h2>🟢 Normal Commands (2)</h2>
+      <p>
+        Tracked by the adapter but emit no warning or critical signals under
+        normal usage. Observe them in your event stream or build custom alerting
+        if needed.
+      </p>
+
+      <div className="not-prose space-y-3 my-5">
+        {[
+          {
+            cmd: "MULTI",
+            slug: "redis-multi",
+            issue:
+              "Opens a transaction block. O(1) itself, but the EXEC duration reflects all queued commands.",
+            note: "Always pair with error handling that calls DISCARD if EXEC is never reached.",
+          },
+          {
+            cmd: "EXEC",
+            slug: "redis-exec",
+            issue:
+              "Executes queued commands atomically. Duration reflects cumulative cost of the full transaction.",
+            note: "Returns null if a WATCH-ed key was modified — always handle the null case.",
+          },
+        ].map((c) => (
+          <div
+            key={c.cmd}
+            className="border border-border border-l-4 border-l-green-500 rounded-r-xl p-5 shadow-sm"
+            style={{ background: "var(--card)" }}
+          >
+            <div className="flex items-center gap-3 mb-2">
+              <Link href={`/docs/signals/${c.slug}`}>
+                <code
+                  className="font-bold text-sm bg-muted px-2 py-0.5 rounded border hover:underline"
+                  style={{
+                    fontFamily: "var(--font-mono)",
+                    color: "var(--foreground)",
+                  }}
+                >
+                  {c.cmd}
+                </code>
+              </Link>
+              <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full border bg-green-50 dark:bg-green-950/40 text-green-700 dark:text-green-400 border-green-200/50 dark:border-green-900/50">
+                normal
+              </span>
+            </div>
+            <p
+              className="text-sm mb-1 leading-relaxed"
+              style={{ color: "var(--muted-foreground)" }}
+            >
+              {c.issue}
+            </p>
+            <p className="text-sm text-green-600 dark:text-green-400">
+              ℹ️ {c.note}
+            </p>
+          </div>
+        ))}
+      </div>
 
       <h2>Category-based alerting</h2>
       <CodeBlock
