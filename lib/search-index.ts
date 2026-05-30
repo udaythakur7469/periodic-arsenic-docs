@@ -54,7 +54,7 @@ export const searchIndex: SearchRecord[] = [
     href: "/docs/signals",
     section: "Core Concepts",
     description:
-      "50+ signals across Critical, Warning, and Info severity levels.",
+      "62 signals across Critical, Warning, and Info severity levels.",
     tags: ["signals", "severity", "critical", "warning", "info"],
   },
   {
@@ -111,7 +111,7 @@ export const searchIndex: SearchRecord[] = [
     href: "/docs/adapters/redis",
     section: "Adapters",
     description:
-      "Instrument Redis commands with redisAdapter. 29 commands classified.",
+      "Instrument Redis commands with redisAdapter. 32 commands classified.",
     tags: ["redis", "ioredis", "redisAdapter", "commands", "KEYS", "FLUSHALL"],
   },
 
@@ -467,8 +467,33 @@ export const searchIndex: SearchRecord[] = [
     title: "redis_scan",
     href: "/docs/signals/redis-scan",
     section: "Signals",
-    description: "Full dataset scan when iterated to completion. Warning.",
-    tags: ["redis", "scan", "sscan", "hscan", "zscan", "warning"],
+    description:
+      "Full keyspace scan — O(N) when iterated to completion. Warning.",
+    tags: ["redis", "scan", "cursor", "keyspace", "warning"],
+  },
+  {
+    title: "redis_sscan",
+    href: "/docs/signals/redis-sscan",
+    section: "Signals",
+    description:
+      "Cursor-based set scan — O(N) across all members when iterated to completion. Warning.",
+    tags: ["redis", "sscan", "scan", "set", "cursor", "warning"],
+  },
+  {
+    title: "redis_hscan",
+    href: "/docs/signals/redis-hscan",
+    section: "Signals",
+    description:
+      "Cursor-based hash scan — O(N) across all fields when iterated to completion. Warning.",
+    tags: ["redis", "hscan", "scan", "hash", "cursor", "warning"],
+  },
+  {
+    title: "redis_zscan",
+    href: "/docs/signals/redis-zscan",
+    section: "Signals",
+    description:
+      "Cursor-based sorted set scan — O(N) across all members when iterated to completion. Warning.",
+    tags: ["redis", "zscan", "scan", "sorted set", "cursor", "warning"],
   },
   {
     title: "redis_sunion",
@@ -578,5 +603,21 @@ export const searchIndex: SearchRecord[] = [
     description:
       "Blocks until replicas acknowledge writes — replication lag. Warning.",
     tags: ["redis", "wait", "replication", "warning"],
+  },
+  {
+    title: "redis_multi",
+    href: "/docs/signals/redis-multi",
+    section: "Signals",
+    description:
+      "Opens a Redis transaction block — MULTI queues commands until EXEC or DISCARD. Info.",
+    tags: ["redis", "multi", "transaction", "exec", "info"],
+  },
+  {
+    title: "redis_exec",
+    href: "/docs/signals/redis-exec",
+    section: "Signals",
+    description:
+      "Executes all queued transaction commands — duration reflects cumulative cost. Returns null on WATCH conflict. Info.",
+    tags: ["redis", "exec", "transaction", "multi", "watch", "info"],
   },
 ];
